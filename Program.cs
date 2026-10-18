@@ -1,73 +1,129 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ConsoleApp4
+namespace CryptoWallet;
+
+internal class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void AdicionarTarefa(List<string> tarefas)
+        int opcao;
+
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+        Console.Clear();
+        Console.WriteLine("----CryptoWallet Console----");
+        Console.WriteLine("Welcome to the CryptoWallet Console Application!");
+        Console.WriteLine("Press enter to start ...");
+        Console.ReadKey();
+        Console.WriteLine("Choose an option:");
+
+        double saldosEuros = 1000.0;
+        Dictionary<string, double> myWallet = new Dictionary<string, double>()
         {
-            Console.WriteLine("Digite a tarefa a ser adicionada: ");
-            string tarefa = Console.ReadLine()!;
-            tarefas.Add(tarefa);
-        }
-        static void ListarTarefas(List<string> tarefas)
+            {"BTC", 0.0 },
+            {"ETH", 0.0}
+        };
+        Dictionary<string, double> coinsPrices = new Dictionary<string, double>()
         {
-            Console.WriteLine("----- LISTA DE TAREFAS -----");
-            if (tarefas.Count == 0)
+            {"BTC", 50000.0 },
+            {"ETH", 3000.0}
+        };
+        do
+        {
+            ShowMenu();
+            opcao = int.Parse(Console.ReadLine()!);
+            if (opcao == 1)
             {
-                Console.WriteLine("Nenhuma tarefa cadastrada.");
+                Console.WriteLine("\n---- Your Wallet ----");
+                Console.WriteLine($"Cash: {saldosEuros:F2}");
+                Console.WriteLine($"Bitcoin (BTC): {myWallet["BTC"]:F6}");
+                Console.WriteLine($"Ethereum (ETH): {myWallet["ETH"]:F4}");
+                Console.WriteLine("----------------------");
             }
-            else
+            else if (opcao == 2)
             {
-                for (int i = 0; i < tarefas.Count; i++)
+                Console.Clear();
+                Console.WriteLine("\n---- Buy Cryptocurrency ----");
+                Console.WriteLine("\n Which cryptocurrency do you want to buy? (BTC/ETH)");
+                string coin = Console.ReadLine()!.ToUpper();
+                if (!coinsPrices.ContainsKey(coin))
                 {
-                    Console.WriteLine($"{i + 1}. {tarefas[i]}");
+                    Console.Clear();
+                    Console.WriteLine("Invalid cryptocurrency");
+                    continue;
                 }
-            }
-        }
-        static void RemoverTarefa(List<string> tarefas)
-        {
-            Console.WriteLine("Digite o número da tarefa a ser removida: ");
-            int numeroTarefa = int.Parse(Console.ReadLine()!);
-            if (numeroTarefa < 1 || numeroTarefa > tarefas.Count)
-            {
-                Console.WriteLine("Número de tarefa inválido.");
-            }
-            else
-            {
-                tarefas.RemoveAt(numeroTarefa - 1);
-                Console.WriteLine("Tarefa removida com sucesso.");
-            }
-        }
-        static void Main(string[] args)
-        {
-            List<string> tarefas = new List<string>();
-            while (true)
-            {
-                Console.WriteLine("----- GERENCIADOR DE TAREFAS");
-                Console.WriteLine("1. Adicionar tarefa");
-                Console.WriteLine("2. Listar tarefas ");
-                Console.WriteLine("3. Remover tarefa");
-                Console.WriteLine("4. Sair");
-
-                Console.WriteLine("Escolha uma opção: ");
-                string opcao = Console.ReadLine()!;
-
-                if (opcao == "1")
-                { AdicionarTarefa(tarefas);
-                } else if (opcao == "2") 
-                { ListarTarefas(tarefas); 
-                } else if (opcao == "3")
-                { RemoverTarefa(tarefas);
-                } else if (opcao == "4")
+                Console.Clear();
+                Console.WriteLine("How many Euros (€) do you want to spend?");
+                double amount = double.Parse(Console.ReadLine()!);
+                if (amount > saldosEuros)
                 {
-                    break;
+                    Console.Clear();
+                    Console.WriteLine("Insufficient funds");
                 }
                 else
-                { Console.WriteLine("Opção inválida. Tente novamente."); 
+                {
+                    Console.Clear();
+                    double price = coinsPrices[coin];
+                    double quantity = amount / price;
+                    myWallet[coin] += quantity;
+                    saldosEuros -= amount;
+                    Console.WriteLine($"You bought {quantity:F6} {coin} for {amount:F2}€");
                 }
             }
-        }
+            else if (opcao == 3)
+            {
+                Console.Clear();
+                Console.WriteLine("\n---- Sell Cryptocurrency ----");
+                Console.WriteLine("\n Which cryptocurrency do you want to sell? (BTC/ETH)");
+                string coin = Console.ReadLine()!.ToUpper();
+                if (!coinsPrices.ContainsKey(coin))
+                {
+                    Console.Clear();
+                    Console.WriteLine("Invalid cryptocurrency");
+                    continue;
+                }
+                Console.Clear();
+                Console.WriteLine("Units available: " + myWallet[coin] + " " + coin);
+                Console.WriteLine("How many units do you want to sell?");
+                double quantity = double.Parse(Console.ReadLine()!);
+                if (quantity > myWallet[coin])
+                {
+                    Console.Clear();
+                    Console.WriteLine("Insufficient funds");
+                }
+                else
+                {
+                    Console.Clear();
+                    double price = coinsPrices[coin];
+                    double amount = quantity * price;
+                    myWallet[coin] -= quantity;
+                    saldosEuros += amount;
+                    Console.WriteLine($"You sold {quantity:F6} {coin} for {amount:F2}€");
+                }
+            }
+            else if (opcao == 4)
+            {
+                Console.Clear();
+                Console.WriteLine("Exiting the application...");
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Invalid option. Please try again.");
+            }
+
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
+
+        } while (opcao != 4);
+    }
+
+    static void ShowMenu()
+    {
+        Console.Clear();
+        Console.WriteLine("1. View Wallet");
+        Console.WriteLine("2. Buy Cryptocurrency");
+        Console.WriteLine("3. Sell Cryptocurrency");
+        Console.WriteLine("4. Exit");
     }
 }
