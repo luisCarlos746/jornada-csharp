@@ -9,11 +9,12 @@ Bem-vindo ao meu repositório de evolução! Aqui guardo todos os projetos, exer
 *   **Projetos em Destaque:** 
     *   [Calculadora de Notas Escolares](./CalculadoraNotas.cs) - Um programa de console que calcula médias, valida limites de notas e avalia a situação do aluno com base na nota e frequência.
 
-### 🔹 Semanas 5 a 6: Modularização, Coleções e Lógica de Negócio
-*   **Conceitos aprendidos:** Funções/Métodos (`static`), listas dinâmicas (`List<T>`), estruturas de chave-valor (`Dictionary<TKey, TValue>`), laços de repetição (`while`, `do-while`, `for`) e Cláusulas de Guarda (*Early Return* com `continue`).
+### 🔹 Semanas 5 a 6: Modularização, Coleções e Estruturas Avançadas
+*   **Conceitos aprendidos:** Funções/Métodos (`static`), matrizes bidimensionais (`char[,]`), listas dinâmicas (`List<T>`), estruturas de chave-valor (`Dictionary<TKey, TValue>`), laços de repetição aninhados (`for`, `while`, `do-while`) e Cláusulas de Guarda (*Early Return*).
 *   **Projetos em Destaque:**
-    *   [Gerenciador de Tarefas Console](./Program.cs) - Uma aplicação de lista de tarefas (To-Do) dividida em funções específicas para Adicionar, Listar e Remover itens com validação de índices.
+    *   [Gerenciador de Tarefas Console](./GerenciadorTarefas.cs) - Uma aplicação de lista de tarefas (To-Do) dividida em funções específicas para Adicionar, Listar e Remover itens com validação de índices.
     *   [CryptoWallet Console](./CryptoWallet.cs) - Um simulador financeiro de compra e venda de criptomoedas (BTC/ETH) com controlo de saldo em Euros, validação de ativos existentes e proteção contra saldo insuficiente.
+    *   [CinemaBooking.cs](./CinemaBooking.cs) - Um sistema de reserva de bilhetes de cinema que utiliza matrizes bidimensionais para desenhar a sala no terminal, controlando lugares livres (`.`) e ocupados (`X`) com validação completa de limites.
 
 ---
 
